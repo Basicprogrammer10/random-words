@@ -4,9 +4,7 @@
   import { state } from "./lib/stores";
 
   let words = ["", "", "", ""];
-  function refresh() {
-    words = $state.randomWords();
-  }
+  const refresh = () => (words = $state.randomWords());
 </script>
 
 <main>

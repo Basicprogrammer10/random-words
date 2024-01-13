@@ -59,7 +59,7 @@
     min-width: 600px;
     width: 32vw;
 
-    font-size: 10vh;
+    font-size: min(10vw, 10vh);
     font-family: sans-serif;
 
     display: flex;

@@ -18,7 +18,12 @@
   };
 </script>
 
-<Modal opened={$open} title={"Edit Word List"} size="lg">
+<Modal
+  opened={$open}
+  on:close={() => ($open = false)}
+  title={"Edit Word List"}
+  size="lg"
+>
   <Textarea
     label="List of words to choose from, one per line. At least four words are required."
     resize="vertical"

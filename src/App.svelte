@@ -1,42 +1,65 @@
 <script lang="ts">
-  import { SimpleGrid, Button, Flex, Text } from "@svelteuidev/core";
+  import { writable } from "svelte/store";
+  import {
+    SvelteUIProvider,
+    SimpleGrid,
+    Button,
+    Text,
+  } from "@svelteuidev/core";
   import { Symbol } from "radix-icons-svelte";
-  import { state } from "./lib/stores";
 
-  let words = ["", "", "", ""];
-  const refresh = () => (words = $state.randomWords());
+  import { state } from "./lib/stores";
+  import WordsModal from "./lib/WordsModal.svelte";
+
+  const DEFAULT_WORDS = ["", "", "", ""];
+  let words = DEFAULT_WORDS;
+  const refresh = () =>
+    (words = $state.count() >= 4 ? $state.randomWords() : DEFAULT_WORDS);
   if ($state.count() != 0) refresh();
+
+  let wordsModal = writable(false);
 </script>
 
-<main>
-  <div class="grid">
-    <SimpleGrid cols={2}>
-      <div class="word">{words[0]}</div>
-      <div class="word">{words[1]}</div>
-      <div class="word">{words[2]}</div>
-      <div class="word">{words[3]}</div>
-    </SimpleGrid>
-  </div>
+<svelte:head>
+  <title>Random Word Gen</title>
+</svelte:head>
 
-  <div class="footer">
-    <div class="left">
-      <Button on:click={refresh}>
-        <Symbol />
-      </Button>
-      <Button>Edit Wordlist ({$state.count()})</Button>
+<SvelteUIProvider class="main">
+  <main>
+    <div class="grid">
+      <SimpleGrid cols={2}>
+        <div class="word">{words[0]}</div>
+        <div class="word">{words[1]}</div>
+        <div class="word">{words[2]}</div>
+        <div class="word">{words[3]}</div>
+      </SimpleGrid>
     </div>
-    <div class="right">
-      <Text>Connor Slade &bull; <a href="/">Source</a></Text>
+
+    <div class="footer">
+      <div class="left">
+        <Button on:click={refresh}>
+          <Symbol />
+        </Button>
+        <Button on:click={() => ($wordsModal = true)}>
+          Edit Wordlist ({$state.count()})
+        </Button>
+      </div>
+      <div class="right">
+        <Text>Connor Slade &bull; <a href="/">Source</a></Text>
+      </div>
     </div>
-  </div>
-</main>
+
+    <WordsModal open={wordsModal} />
+  </main>
+</SvelteUIProvider>
 
 <style>
   .word {
-    height: 200px;
-    width: 600px;
+    height: 18.5vh;
+    min-width: 600px;
+    width: 32vw;
 
-    font-size: 100px;
+    font-size: 10vh;
     font-family: sans-serif;
 
     display: flex;

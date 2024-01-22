@@ -45,7 +45,7 @@
         </Button>
       </div>
       <div class="right">
-        <Text>Connor Slade &bull; <a href="/">Source</a></Text>
+        <Text>Connor Slade &bull; <a href="https://github.com/Basicprogrammer10/random-words">Source</a></Text>
       </div>
     </div>
 
